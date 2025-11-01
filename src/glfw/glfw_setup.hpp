@@ -18,6 +18,7 @@ class GlfwSetup{
 	private:
 		GLFWwindow*	_window;
 
+
 };
 
 #endif
