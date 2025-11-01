@@ -38,7 +38,8 @@ else
 endif
 
 # Include directories
-INCLUDES = -I$(INC_DIR)
+SRC_SUBDIRS = $(shell find $(SRC_DIR) -type d)
+INCLUDES = -I$(INC_DIR) $(addprefix -I,$(SRC_SUBDIRS))
 
 # Source files
 SOURCES = $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/**/*.cpp)
