@@ -25,7 +25,7 @@ VULKAN_LIB = $(VULKAN_SDK_PATH)/lib
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
     # macOS with MoltenVK
-    LDFLAGS = -L$(VULKAN_LIB) -lvulkan -lglfw -L/opt/homebrew/lib -I/opt/homebrew/include
+    LDFLAGS = -L$(VULKAN_LIB) -lvulkan -lglfw -L/opt/homebrew/lib -I/opt/homebrew/include -Wl,-rpath,$(VULKAN_LIB)
     CXXFLAGS += -I$(VULKAN_INCLUDE)
 else ifeq ($(UNAME_S),Linux)
     # Linux
