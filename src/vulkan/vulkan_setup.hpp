@@ -16,9 +16,19 @@ class VulkanSetup {
 		void initVulkan();
 
 	private:
+		void cleanup();
 		void createInstance();
 
 		VkInstance _instance;
+
+		// Not clear about following setup
+		// static const std::vector<const char*> validationLayers;
+
+		// #ifdef NDEBUG
+		// 	static const bool enableValidationLayers = false;
+		// #else
+		// 	static const bool enableValidationLayers = true;
+		// #endif
 };
 
 #endif

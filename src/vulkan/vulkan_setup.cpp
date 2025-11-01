@@ -1,10 +1,28 @@
 #include "vulkan_setup.hpp"
 #include <stdexcept>
 #include <vector>
+#include <iostream>
+
+// const std::vector<const char*> validationLayers = {
+//     "VK_LAYER_KHRONOS_validation"
+// };
+
+// #ifdef NDEBUG
+//     const bool enableValidationLayers = false;
+// #else
+//     const bool enableValidationLayers = true;
+// #endif
 
 VulkanSetup::VulkanSetup()
 	: _instance(nullptr){}
-VulkanSetup::~VulkanSetup(){}
+VulkanSetup::~VulkanSetup(){
+	cleanup();
+}
+
+void VulkanSetup::cleanup() {
+    vkDestroyInstance(_instance, nullptr);
+	std::cout << "Vulkan has been destroyed" << std::endl;
+}
 
 void VulkanSetup::initVulkan() {
 	createInstance();
@@ -51,3 +69,5 @@ void VulkanSetup::createInstance() {
 		throw std::runtime_error("failed to create instance!");
 	}
 }
+
+
