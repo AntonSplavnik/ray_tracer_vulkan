@@ -4,7 +4,7 @@
 PROJECT_NAME = vulkan_ray_tracer
 
 # Compiler and flags
-CXX = g++
+CXX = clang++
 CXXFLAGS = -std=c++17 -Wall -Wextra -O2
 DEBUGFLAGS = -g -O0 -DDEBUG
 
