@@ -5,8 +5,8 @@ PROJECT_NAME = vulkan_ray_tracer
 
 # Compiler and flags
 CXX = clang++
-CXXFLAGS = -std=c++17 -Wall -Wextra -O2
-DEBUGFLAGS = -g -O0 -DDEBUG
+CXXFLAGS = -std=c++17 -Wall -Wextra
+DEBUGFLAGS = -g3 -O0 -DDEBUG -fsanitize=address,undefined
 
 # Directories
 SRC_DIR = src
@@ -89,7 +89,7 @@ directories:
 # Link object files to create executable
 $(TARGET): $(OBJECTS)
 	@echo "Linking $@..."
-	@$(CXX) $(OBJECTS) -o $@ $(LDFLAGS)
+	@$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
 	@echo "Build complete: $@"
 
 # Compile source files to object files
@@ -132,17 +132,28 @@ run: all
 	@echo "Running $(TARGET)..."
 	@cd $(BIN_DIR) && ./$(PROJECT_NAME)
 
-# Clean build artifacts
+# Clean object files only
 .PHONY: clean
 clean:
-	@echo "Cleaning build artifacts..."
+	@echo "Cleaning object files..."
+	@rm -rf $(OBJ_DIR)
+	@echo "Clean complete."
+
+# Full clean (remove all built files)
+.PHONY: fclean
+fclean:
+	@echo "Cleaning all build artifacts..."
 	@rm -rf $(OBJ_DIR)
 	@rm -rf $(BIN_DIR)
-	@echo "Clean complete."
+	@echo "Full clean complete."
 
 # Clean and rebuild
 .PHONY: rebuild
 rebuild: clean all
+
+# Redo: full clean and rebuild
+.PHONY: re
+re: fclean all
 
 # Install dependencies (macOS with Homebrew)
 .PHONY: install-deps
@@ -180,8 +191,10 @@ help:
 	@echo "  release      - Build optimized release version"
 	@echo "  shaders      - Compile all shaders"
 	@echo "  run          - Build and run the application"
-	@echo "  clean        - Remove build artifacts"
+	@echo "  clean        - Remove object files only"
+	@echo "  fclean       - Remove all build artifacts (objects + binaries)"
 	@echo "  rebuild      - Clean and rebuild"
+	@echo "  re           - Full clean and rebuild"
 	@echo "  install-deps - Install dependencies (macOS)"
 	@echo "  info         - Show build configuration"
 	@echo "  help         - Show this help message"
